@@ -6,7 +6,7 @@ Created on Thu Sep 11 14:04:18 2025
 """
 
 import sqlite3, json
-from .models import LearnerProfile, asdict
+from .questionnaire import LearnerProfile, asdict
 
 
 # --- DB

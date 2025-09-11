@@ -21,4 +21,6 @@ class LearnerProfile:
     checkpoint_freq: float
     motivation: dict
     main_field: str
-    domain_expertise: str
+
+# class KnowledgeProfile:
+#     domaine: str
