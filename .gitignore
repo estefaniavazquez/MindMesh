@@ -7,13 +7,6 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-.git
-.vs
-__pycache__
-src
-tests
-gradio.py
-interface.py
 .Python
 build/
 develop-eggs/
