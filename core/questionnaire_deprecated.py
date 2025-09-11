@@ -1,54 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 11 14:04:18 2025
+Created on Thu Sep 11 14:02:32 2025
 
 @author: maxyo
 """
 
-import sqlite3, json
 from dataclasses import dataclass, asdict, field
 from typing import List
-
+from .db import save_profile
 
 # --- Profil
 DB_PATH = "Projet IC.db"
-
-# --- DB
-def init_db(db_path):
-    conn = sqlite3.connect(db_path)
-    cur = conn.cursor()
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS learner_profiles (
-        learner_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        knowledge_profile TEXT NOT NULL,
-        learning_profile TEXT
-    )
-    """)
-    conn.commit()
-    conn.close()
-
-def save_profile(knowledge_profile, learning_profile, db_path):
-    conn = sqlite3.connect(db_path)
-    cur = conn.cursor()
-    knowledge_json = json.dumps(asdict(knowledge_profile))
-    learning_json = json.dumps(asdict(learning_profile)) if learning_profile else None
-    cur.execute("""
-        INSERT INTO learner_profiles (knowledge_profile, learning_profile)
-        VALUES (?, ?)
-    """, (knowledge_json, learning_json))
-    conn.commit()
-    learner_id = cur.lastrowid
-    conn.close()
-    return learner_id
-
-def load_profiles(db_path):
-    conn = sqlite3.connect(db_path)
-    cur = conn.cursor()
-    cur.execute("SELECT learner_id, profile_json FROM learner_profiles")
-    rows = cur.fetchall()
-    conn.close()
-    return [(rid, json.loads(js)) for rid, js in rows]
-
 
 
 
