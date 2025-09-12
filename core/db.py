@@ -13,7 +13,9 @@ from typing import List
 # --- Profil
 DB_PATH = "Projet IC.db"
 
-# --- DB
+# -------------------------
+#  
+# -------------------------
 def init_db(db_path):
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
@@ -48,7 +50,6 @@ def load_profiles(db_path):
     rows = cur.fetchall()
     conn.close()
     return [(rid, json.loads(js)) for rid, js in rows]
-
 
 
 
@@ -94,18 +95,18 @@ def KPsubmit_form(name, age, background, familiarity_kw, math_eq, programming_co
 # -------------------------
 @dataclass
 class LearnerProfile:
-    goal_understanding: float
-    problematic: str
-    explanation_style: int
-    precision_level: float
-    analogies: float
-    conciseness: float
-    interactivity: int
-    tone: float
-    humor: float
-    motivation: int
-    learning_mode: int
-    adaptability: int
+    goal_understanding: int = 0
+    problematic: str = ""
+    explanation_style: str = ""
+    precision_level: int = 0
+    analogies: int = 0
+    conciseness: int = 0
+    interactivity: str = ""
+    tone: str = ""
+    humor: str = ""
+    motivation: str = ""
+    learning_mode: int = 0
+    adaptability: str = ""
     
     
     
@@ -114,8 +115,7 @@ class LearnerProfile:
 # -------------------------
 def LPsubmit_form(goal_understanding, problematic, explanation_style, precision_level, 
                   analogies, conciseness, interactivity, tone, humor, motivation, 
-                  learning_mode, adaptability
-                  ):
+                  learning_mode, adaptability):
 
     lp = LearnerProfile(
         goal_understanding=goal_understanding,

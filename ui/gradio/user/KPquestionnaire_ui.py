@@ -1,5 +1,5 @@
 import gradio as gr
-from core.questionnaire import KPsubmit_form
+from core.db import KPsubmit_form
 
 # -------------------------
 # Gradio UI
