@@ -109,6 +109,8 @@ def initialize_knowledge_profiles_table(cur: Cursor):
         CREATE TABLE IF NOT EXISTS knowledge_profiles (
             profile_id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL UNIQUE,
+            name TEXT NOT NULL,
+            age INTEGER NOT NULL,
             background TEXT NOT NULL,
             familiarity_kw TEXT NOT NULL,
             math_eq INTEGER NOT NULL,

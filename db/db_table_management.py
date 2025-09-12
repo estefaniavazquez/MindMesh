@@ -55,10 +55,12 @@ def create_knowledge_profile(username, knowledge_profile: KnowledgeProfile):
 
     cur.execute("""
                 INSERT INTO knowledge_profiles (
-                    user_id, background, familiarity_kw, math_eq, programming_comfort, confidence_asking, support_needs
-                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                    user_id, name, age, background, familiarity_kw, math_eq, programming_comfort, confidence_asking, support_needs
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
         user_id,
+        knowledge_profile.name,
+        knowledge_profile.age,
         knowledge_profile.background,
         knowledge_profile.familiarity_kw,
         knowledge_profile.math_eq,
@@ -70,7 +72,7 @@ def create_knowledge_profile(username, knowledge_profile: KnowledgeProfile):
     conn.commit()
     conn.close()
 
-    return cur.lastrowid
+    return get_knowledge_profile_by_username(username)
 
 
 def get_knowledge_profile_by_username(username):
@@ -88,14 +90,14 @@ def get_knowledge_profile_by_username(username):
         raise ValueError(f"User '{username}' does not exist.")
 
     knowledge_profile = KnowledgeProfile(
-        name=row[0],
-        age=row[1],
-        background=row[2],
-        familiarity_kw=row[3],
-        math_eq=row[4],
-        programming_comfort=row[5],
-        confidence_asking=row[6],
-        support_needs=row[7]
+        name=row[2],
+        age=row[3],
+        background=row[4],
+        familiarity_kw=row[5],
+        math_eq=row[6],
+        programming_comfort=row[7],
+        confidence_asking=row[8],
+        support_needs=row[9]
     )
 
     return knowledge_profile
@@ -151,18 +153,18 @@ def get_learner_profile_by_username(username):
         raise ValueError(f"User '{username}' does not exist.")
 
     learner_profile = LearnerProfile(
-        goal_understanding=row[0],
-        problematic=row[1],
-        explanation_style=row[2],
-        precision_level=row[3],
-        analogies=row[4],
-        conciseness=row[5],
-        interactivity=row[6],
-        tone=row[7],
-        humor=row[8],
-        motivation=row[9],
-        learning_mode=row[10],
-        adaptability=row[11]
+        goal_understanding=row[2],
+        problematic=row[3],
+        explanation_style=row[4],
+        precision_level=row[5],
+        analogies=row[6],
+        conciseness=row[7],
+        interactivity=row[8],
+        tone=row[9],
+        humor=row[10],
+        motivation=row[11],
+        learning_mode=row[12],
+        adaptability=row[13]
     )
 
     return learner_profile

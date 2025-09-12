@@ -3,7 +3,7 @@ from db.db_table_management import create_knowledge_profile
 from profiles.knowledge_profile import KnowledgeProfile
 
 def KPsubmit_form(
-        name, age, background, familiarity, math_eq, programming_comfort, confidence_asking, support_needs
+        username, name, age, background, familiarity, math_eq, programming_comfort, confidence_asking, support_needs
 ):
     kp = KnowledgeProfile(
         name=name,
@@ -15,7 +15,8 @@ def KPsubmit_form(
         confidence_asking=confidence_asking,
         support_needs=support_needs,
     )
-    create_knowledge_profile(kp)
+    create_knowledge_profile(username, kp)
+
 # -----------------------------
 # Build Gradio interface
 # -----------------------------
@@ -43,15 +44,14 @@ with gr.Blocks() as demo:
     )
 
     submit_btn = gr.Button("Submit Profile")
-    output = gr.Textbox(label="Result", interactive=False)
+
 
     # Connect submit button to database function
     submit_btn.click(
         fn=KPsubmit_form,
         inputs=[username, name, age, background, familiarity_kw,
                 math_eq, programming_comfort, confidence_asking,
-                support_needs],
-        outputs=output
+                support_needs]
     )
 
 if __name__ == "__main__":
