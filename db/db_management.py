@@ -139,8 +139,3 @@ def initialize_learner_profiles_table(cur: Cursor):
             FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
             )
     """)
-
-
-# if __name__ == "__main__":
-#     clear_db()
-#     init_db()
