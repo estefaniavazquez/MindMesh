@@ -7,7 +7,7 @@ Created on Thu Sep 11 15:11:10 2025
 
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
-from core.db import init_db, load_profiles
+from db.db_management import init_db, load_profiles
 from core.graphvisualization import create_graph
 from ui.tkinter.secondary.chat_ui import ChatWindow
 from ui.tkinter.secondary.profile_creation_ui import ProfileWindow

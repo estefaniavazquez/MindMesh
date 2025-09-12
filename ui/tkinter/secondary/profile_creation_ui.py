@@ -6,7 +6,7 @@ Created on Thu Sep 11 15:28:24 2025
 """
 
 import tkinter as tk
-from core.db import save_profile
+from db.db_management import save_profile
 from core.questionnaire import LearnerProfile
 
 # ---------------- Profile Creation Window ----------------
