@@ -1,6 +1,7 @@
 import os
 from huggingface_hub import InferenceClient
 
+
 class Agent:
     def __init__(self, username, model="openai/gpt-oss-120b"):
         self.username = username
@@ -15,10 +16,12 @@ class Agent:
 
         self.system_prompt()
 
+
     def fetch_knowledge_profile(self):
         # TODO: Implement fetching knowledge profile from database
 
         self.knowledge_profile = "Has a CS background."
+
 
     def fetch_learning_profile(self):
         # TODO: Implement fetching learning profile from database
@@ -59,10 +62,11 @@ class Agent:
         self.system_prompt()
 
 
+# Quick test through the terminal to verify that the history is maintained
+
 estefania_agent = Agent(
     username="Estefania"
 )
 
-# Chat
 print(estefania_agent.chat("Can you explain what an LLM is?"))
 print(estefania_agent.chat("Now, give me a real-world analogy."))
