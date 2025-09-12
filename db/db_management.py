@@ -6,7 +6,6 @@ Created on Thu Sep 11 14:04:18 2025
 """
 
 import sqlite3 as sql
-import os
 
 from sqlite3 import Cursor
 from db.constants import DB_PATH
@@ -142,6 +141,6 @@ def initialize_learner_profiles_table(cur: Cursor):
     """)
 
 
-if __name__ == "__main__":
-    clear_db()
-    init_db()
+# if __name__ == "__main__":
+#     clear_db()
+#     init_db()

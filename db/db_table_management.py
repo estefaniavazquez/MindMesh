@@ -1,7 +1,6 @@
 import sqlite3 as sql
 import json
 
-from dataclasses import asdict
 from profiles.knowledge_profile import KnowledgeProfile
 from profiles.learner_profile import LearnerProfile
 from db.constants import DB_PATH
@@ -51,7 +50,7 @@ def create_knowledge_profile(knowledge_profile: KnowledgeProfile):
     conn.commit()
     conn.close()
 
-    return knowledge_profile.knowledge_profile_id
+    return cur.lastrowid
 
 
 def create_learner_profile(learner_profile: LearnerProfile):
@@ -81,10 +80,22 @@ def create_learner_profile(learner_profile: LearnerProfile):
     conn.commit()
     conn.close()
 
-    return learner_profile.learner_profile_id
+    return cur.lastrowid
 
 
-def load_knowledge_profiles(db_path):
+def get_all_users(db_path):
+    conn = sql.connect(db_path)
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM users")
+    rows = cur.fetchall()
+
+    conn.close()
+
+    return [(rid, username) for rid, username in rows]
+
+
+def get_all_knowledge_profiles(db_path):
     conn = sql.connect(db_path)
     cur = conn.cursor()
 
@@ -96,7 +107,7 @@ def load_knowledge_profiles(db_path):
     return [(rid, json.loads(js)) for rid, js in rows]
 
 
-def load_learner_profiles(db_path):
+def get_all_learner_profiles(db_path):
     conn = sql.connect(db_path)
     cur = conn.cursor()
 
@@ -107,6 +118,58 @@ def load_learner_profiles(db_path):
 
     return [(rid, json.loads(js)) for rid, js in rows]
 
+
+def get_user_by_username(db_path, username):
+    conn = sql.connect(db_path)
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM users WHERE username = ?", (username,))
+    row = cur.fetchone()
+
+    conn.close()
+
+    if row:
+        return row[0], row[1]  # Return (user_id, username)
+
+    return None
+
+
+def get_knowledge_profile_by_username(db_path, username):
+    conn = sql.connect(db_path)
+    cur = conn.cursor()
+
+    cur.execute("""
+                SELECT kp.* FROM knowledge_profiles kp
+                JOIN users u ON kp.knowledge_profile_id = u.user_id
+                WHERE u.username = ?
+                """, (username,))
+    row = cur.fetchone()
+
+    conn.close()
+
+    if row:
+        return row[0], json.loads(row[1])  # Return (knowledge_profile_id, profile_data)
+
+    return None
+
+
+def get_learner_profile_by_username(db_path, username):
+    conn = sql.connect(db_path)
+    cur = conn.cursor()
+
+    cur.execute("""
+                SELECT lp.* FROM learner_profiles lp
+                JOIN users u ON lp.learner_profile_id = u.user_id
+                WHERE u.username = ?
+                """, (username,))
+    row = cur.fetchone()
+
+    conn.close()
+
+    if row:
+        return row[0], json.loads(row[1])  # Return (learner_profile_id, profile_data)
+
+    return None
 
 
 # TODO: MOVE THESE FUNCTIONS TO THE GRADIO DIR
