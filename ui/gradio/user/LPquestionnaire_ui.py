@@ -6,7 +6,7 @@ Created on Thu Sep 11 19:51:50 2025
 """
 
 import gradio as gr
-from core.db import LPsubmit_form
+from db.db_management import LPsubmit_form
 
 
 # -------------------------
