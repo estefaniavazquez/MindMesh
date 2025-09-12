@@ -44,7 +44,7 @@ def create_knowledge_profile(knowledge_profile: KnowledgeProfile):
         knowledge_profile.math_eq,
         knowledge_profile.programming_comfort,
         knowledge_profile.confidence_asking,
-        knowledge_profile.support_needs
+        ", ".join(knowledge_profile.support_needs)
     ))
 
     conn.commit()
