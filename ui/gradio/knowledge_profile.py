@@ -24,6 +24,7 @@ with gr.Blocks() as demo:
     gr.Markdown("## 🧠 Knowledge Profile Questionnaire")
 
     with gr.Row():
+        username = gr.Text(label="Username")
         name = gr.Textbox(label="What is your name?")
         age = gr.Textbox(label="How old are you?")
 
@@ -47,7 +48,7 @@ with gr.Blocks() as demo:
     # Connect submit button to database function
     submit_btn.click(
         fn=KPsubmit_form,
-        inputs=[name, age, background, familiarity_kw,
+        inputs=[username, name, age, background, familiarity_kw,
                 math_eq, programming_comfort, confidence_asking,
                 support_needs],
         outputs=output

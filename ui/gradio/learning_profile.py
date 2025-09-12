@@ -34,6 +34,8 @@ def LPsubmit_form(
 # -------------------------
 with gr.Blocks() as demo:
     gr.Markdown("## 🧠 Learning Profile Questionnaire")
+
+    username = gr.Textbox(label="Username")
     
     problematic = gr.Textbox(label="Please describe, in your own words, what you think the main goals and challenges are.")
     
@@ -64,7 +66,7 @@ with gr.Blocks() as demo:
 
     submit_btn.click(
         fn=LPsubmit_form,
-        inputs=[goal_understanding, problematic, explanation_style, precision_level,
+        inputs=[username, goal_understanding, problematic, explanation_style, precision_level,
                 analogies, conciseness, interactivity, tone, humor, motivation, learning_mode, adaptability],
         outputs=output
         )
