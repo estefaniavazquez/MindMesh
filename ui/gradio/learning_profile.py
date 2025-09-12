@@ -1,22 +1,14 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Sep 11 19:51:50 2025
-
-@author: maxyo
-"""
-
 import gradio as gr
-
 from profiles.learner_profile import LearnerProfile
 from db.db_table_management import create_learner_profile, get_all_learner_profiles, get_learner_profile_by_username
 
 
 def LPsubmit_form(
-    username, goal_understanding, problematic, explanation_style, precision_level, analogies, conciseness, interactivity, tone, humor, motivation, learning_mode, adaptability
+    username, problematic, goal_understanding, precision_level, analogies, conciseness, learning_mode, explanation_style, interactivity, tone, humor, motivation, adaptability
 ):
     lp = LearnerProfile(
-        goal_understanding=goal_understanding,
         problematic=problematic,
+        goal_understanding=goal_understanding,
         precision_level=precision_level,
         analogies=analogies,
         conciseness=conciseness,
@@ -28,15 +20,11 @@ def LPsubmit_form(
         motivation=motivation,
         adaptability=adaptability
     )
-
     create_learner_profile(username, lp)
 
+    print(get_all_learner_profiles())
 
 
-
-# -------------------------
-# Gradio UI
-# -------------------------
 with gr.Blocks() as demo:
     gr.Markdown("## 🧠 Learning Profile Questionnaire")
 
@@ -67,14 +55,13 @@ with gr.Blocks() as demo:
     adaptability = gr.Radio(["No", "Yes"],  label="Should the AI adapt its style over time as it learns from you? ")
 
     submit_btn = gr.Button("Submit Profile")
-    output = gr.Textbox(label="Result")
 
     submit_btn.click(
         fn=LPsubmit_form,
-        inputs=[username, goal_understanding, problematic, explanation_style, precision_level,
-                analogies, conciseness, interactivity, tone, humor, motivation, learning_mode, adaptability],
-        outputs=output
+        inputs=[username, problematic, goal_understanding, precision_level, analogies, conciseness, learning_mode,
+                explanation_style, interactivity, tone, humor, motivation, adaptability],
         )
+
 
 if __name__ == "__main__":
     demo.launch()

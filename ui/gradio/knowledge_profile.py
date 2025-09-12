@@ -1,6 +1,7 @@
 import gradio as gr
-from db.db_table_management import create_knowledge_profile
+from db.db_table_management import create_knowledge_profile, get_all_knowledge_profiles
 from profiles.knowledge_profile import KnowledgeProfile
+
 
 def KPsubmit_form(
         username, name, age, background, familiarity, math_eq, programming_comfort, confidence_asking, support_needs
@@ -17,9 +18,8 @@ def KPsubmit_form(
     )
     create_knowledge_profile(username, kp)
 
-# -----------------------------
-# Build Gradio interface
-# -----------------------------
+    print(get_all_knowledge_profiles())
+
 
 with gr.Blocks() as demo:
     gr.Markdown("## 🧠 Knowledge Profile Questionnaire")
@@ -45,14 +45,13 @@ with gr.Blocks() as demo:
 
     submit_btn = gr.Button("Submit Profile")
 
-
-    # Connect submit button to database function
     submit_btn.click(
         fn=KPsubmit_form,
         inputs=[username, name, age, background, familiarity_kw,
                 math_eq, programming_comfort, confidence_asking,
                 support_needs]
     )
+
 
 if __name__ == "__main__":
     demo.launch()

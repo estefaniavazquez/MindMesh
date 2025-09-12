@@ -8,7 +8,7 @@ Created on Thu Sep 11 15:11:10 2025
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 from db.db_management import init_db, load_profiles
-from core.graphvisualization import create_graph
+from llm.graphvisualization import create_graph
 from ui.tkinter.secondary.chat_ui import ChatWindow
 from ui.tkinter.secondary.profile_creation_ui import ProfileWindow
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg

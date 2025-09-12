@@ -1,6 +1,4 @@
 import sqlite3 as sql
-import json
-
 from profiles.knowledge_profile import KnowledgeProfile
 from profiles.learner_profile import LearnerProfile
 from db.constants import DB_PATH
@@ -15,8 +13,6 @@ def create_admin(username: str):
     conn.commit()
     conn.close()
 
-    return cur.lastrowid
-
 
 def create_user(username: str):
     conn = sql.connect(DB_PATH)
@@ -26,8 +22,6 @@ def create_user(username: str):
 
     conn.commit()
     conn.close()
-
-    return cur.lastrowid
 
 
 def get_user_id_by_username(username: str):
@@ -72,8 +66,6 @@ def create_knowledge_profile(username, knowledge_profile: KnowledgeProfile):
     conn.commit()
     conn.close()
 
-    return get_knowledge_profile_by_username(username)
-
 
 def get_knowledge_profile_by_username(username):
     conn = sql.connect(DB_PATH)
@@ -113,29 +105,27 @@ def create_learner_profile(username, learner_profile: LearnerProfile):
 
     cur.execute("""
                 INSERT INTO learner_profiles (
-                    user_id, goal_understanding, problematic, explanation_style, precision_level, analogies,
-                    conciseness, interactivity, tone, humor, motivation, learning_mode, adaptability
+                    user_id, problematic, goal_understanding, precision_level, analogies, conciseness, 
+                    learning_mode, explanation_style, interactivity, tone, humor, motivation, adaptability
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
         user_id,
-        learner_profile.goal_understanding,
         learner_profile.problematic,
-        learner_profile.explanation_style,
+        learner_profile.goal_understanding,
         learner_profile.precision_level,
         learner_profile.analogies,
         learner_profile.conciseness,
+        learner_profile.learning_mode,
+        learner_profile.explanation_style,
         learner_profile.interactivity,
         learner_profile.tone,
         learner_profile.humor,
         learner_profile.motivation,
-        learner_profile.learning_mode,
         learner_profile.adaptability
     ))
 
     conn.commit()
     conn.close()
-
-    return cur.lastrowid
 
 
 def get_learner_profile_by_username(username):
@@ -153,58 +143,58 @@ def get_learner_profile_by_username(username):
         raise ValueError(f"User '{username}' does not exist.")
 
     learner_profile = LearnerProfile(
-        goal_understanding=row[2],
-        problematic=row[3],
-        explanation_style=row[4],
-        precision_level=row[5],
-        analogies=row[6],
-        conciseness=row[7],
-        interactivity=row[8],
-        tone=row[9],
-        humor=row[10],
-        motivation=row[11],
-        learning_mode=row[12],
+        problematic=row[2],
+        goal_understanding=row[3],
+        precision_level=row[4],
+        analogies=row[5],
+        conciseness=row[6],
+        learning_mode=row[7],
+        explanation_style=row[8],
+        interactivity=row[9],
+        tone=row[10],
+        humor=row[11],
+        motivation=row[12],
         adaptability=row[13]
     )
 
     return learner_profile
 
 
-def set_kp_value_by_username(username, field, value):
-    conn = sql.connect(DB_PATH)
-    cur = conn.cursor()
-
-    user_id = get_user_id_by_username(username)
-    if user_id is None:
-        raise ValueError(f"User '{username}' does not exist.")
-
-    if field not in {"background", "familiarity_kw", "math_eq", "programming_comfort", "confidence_asking", "support_needs"}:
-        raise ValueError(f"Invalid field '{field}' for KnowledgeProfile.")
-
-    query = f"UPDATE knowledge_profiles SET {field} = ? WHERE user_id = ?"
-    cur.execute(query, (value, user_id))
-
-    conn.commit()
-    conn.close()
-
-
-def set_lp_value_by_username(username, field, value):
-    conn = sql.connect(DB_PATH)
-    cur = conn.cursor()
-
-    user_id = get_user_id_by_username(username)
-    if user_id is None:
-        raise ValueError(f"User '{username}' does not exist.")
-
-    if field not in {"goal_understanding", "problematic", "explanation_style", "precision_level", "analogies",
-                     "conciseness", "interactivity", "tone", "humor", "motivation", "learning_mode", "adaptability"}:
-        raise ValueError(f"Invalid field '{field}' for LearnerProfile.")
-
-    query = f"UPDATE learner_profiles SET {field} = ? WHERE user_id = ?"
-    cur.execute(query, (value, user_id))
-
-    conn.commit()
-    conn.close()
+# def set_kp_value_by_username(username, field, value):
+#     conn = sql.connect(DB_PATH)
+#     cur = conn.cursor()
+#
+#     user_id = get_user_id_by_username(username)
+#     if user_id is None:
+#         raise ValueError(f"User '{username}' does not exist.")
+#
+#     if field not in {"background", "familiarity_kw", "math_eq", "programming_comfort", "confidence_asking", "support_needs"}:
+#         raise ValueError(f"Invalid field '{field}' for KnowledgeProfile.")
+#
+#     query = f"UPDATE knowledge_profiles SET {field} = ? WHERE user_id = ?"
+#     cur.execute(query, (value, user_id))
+#
+#     conn.commit()
+#     conn.close()
+#
+#
+# def set_lp_value_by_username(username, field, value):
+#     conn = sql.connect(DB_PATH)
+#     cur = conn.cursor()
+#
+#     user_id = get_user_id_by_username(username)
+#     if user_id is None:
+#         raise ValueError(f"User '{username}' does not exist.")
+#
+#     if field not in {"goal_understanding", "problematic", "explanation_style", "precision_level", "analogies",
+#                      "conciseness", "interactivity", "tone", "humor", "motivation", "learning_mode", "adaptability"}:
+#         raise ValueError(f"Invalid field '{field}' for LearnerProfile.")
+#
+#     query = f"UPDATE learner_profiles SET {field} = ? WHERE user_id = ?"
+#     cur.execute(query, (value, user_id))
+#
+#     conn.commit()
+#     conn.close()
 
 
 def get_all_users():
@@ -216,7 +206,7 @@ def get_all_users():
 
     conn.close()
 
-    return [(rid, username) for rid, username in rows]
+    return rows
 
 
 def get_all_knowledge_profiles():
@@ -228,7 +218,7 @@ def get_all_knowledge_profiles():
 
     conn.close()
 
-    return [(rid, json.loads(js)) for rid, js in rows]
+    return rows
 
 
 def get_all_learner_profiles():
@@ -240,7 +230,7 @@ def get_all_learner_profiles():
 
     conn.close()
 
-    return [(rid, json.loads(js)) for rid, js in rows]
+    return rows
 
 
 def get_user_by_username(username):
@@ -252,7 +242,4 @@ def get_user_by_username(username):
 
     conn.close()
 
-    if row:
-        return row[0], row[1]  # Return (user_id, username)
-
-    return None
+    return row

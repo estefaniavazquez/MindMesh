@@ -7,7 +7,7 @@ Created on Thu Sep 11 15:33:15 2025
 
 import tkinter as tk
 from tkinter import ttk
-from core.agent import reply
+from llm.agent import reply
 
 # ---------------- Chat Window ----------------
 class ChatWindow(tk.Toplevel):

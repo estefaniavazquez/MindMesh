@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-
 @dataclass
 class LearnerProfile:
     goal_understanding: int = 0
@@ -15,4 +14,3 @@ class LearnerProfile:
     motivation: str = ""
     learning_mode: int = 0
     adaptability: str = ""
-

@@ -1,11 +1,10 @@
 import gradio as gr
 
+
 with gr.Blocks() as demo:
-    # Header
     with gr.Row():
         gr.Markdown("<h1 style='text-align:center'>Welcome to Mind MeSH</h1>")
 
-    # Instructions section
     with gr.Row():
         with gr.Column(scale=2):
             gr.Markdown("""
@@ -22,6 +21,7 @@ with gr.Blocks() as demo:
 
             <p style="color:red; font-weight:bold;">⚠️ Warning Message if needed</p>
             """)
+
 
 if __name__ == "__main__":
     demo.launch()

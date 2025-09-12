@@ -1,12 +1,13 @@
 import os
 from huggingface_hub import InferenceClient
+from db.db_table_management import get_knowledge_profile_by_username, get_learner_profile_by_username
 
 
 class Agent:
     def __init__(self, username, model="openai/gpt-oss-120b"):
         self.username = username
-        self.knowledge_profile = None
-        self.learning_profile = None
+        self.knowledge_profile = get_knowledge_profile_by_username(username)
+        self.learning_profile = get_learner_profile_by_username(username)
         self.history = []
         self.client = InferenceClient(
             provider="cerebras",
@@ -14,25 +15,8 @@ class Agent:
         )
         self.model = model
 
-        self.system_prompt()
-
-
-    def fetch_knowledge_profile(self):
-        # TODO: Implement fetching knowledge profile from database
-
-        self.knowledge_profile = "Has a CS background."
-
-
-    def fetch_learning_profile(self):
-        # TODO: Implement fetching learning profile from database
-
-        self.learning_profile = "Prefers step-by-step reasoning with examples."
-
 
     def system_prompt(self):
-        self.fetch_knowledge_profile()
-        self.fetch_learning_profile()
-
         context_prompt = f"""
         You are an AI assistant for a user named {self.username}.
         They have the following knowledge profile: {self.knowledge_profile}
@@ -60,13 +44,3 @@ class Agent:
     def reset(self):
         self.history = []
         self.system_prompt()
-
-
-# Quick test through the terminal to verify that the history is maintained
-
-estefania_agent = Agent(
-    username="Estefania"
-)
-
-print(estefania_agent.chat("Can you explain what an LLM is?"))
-print(estefania_agent.chat("Now, give me a real-world analogy."))
