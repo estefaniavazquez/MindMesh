@@ -9,7 +9,7 @@ def Usubmit_form(
 ):
     u = create_user(username)
     print(u)
-    g = get_all_users(DB_PATH)
+    g = get_all_users()
     print(g)
 
 with gr.Blocks() as demo:

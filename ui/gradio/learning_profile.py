@@ -6,11 +6,13 @@ Created on Thu Sep 11 19:51:50 2025
 """
 
 import gradio as gr
+
 from profiles.learner_profile import LearnerProfile
-from db.db_table_management import create_learner_profile
+from db.db_table_management import create_learner_profile, get_all_learner_profiles, get_learner_profile_by_username
+
 
 def LPsubmit_form(
-    goal_understanding, problematic, explanation_style, precision_level, analogies, conciseness, interactivity, tone, humor, motivation, learning_mode, adaptability
+    username, goal_understanding, problematic, explanation_style, precision_level, analogies, conciseness, interactivity, tone, humor, motivation, learning_mode, adaptability
 ):
     lp = LearnerProfile(
         goal_understanding=goal_understanding,
@@ -27,8 +29,7 @@ def LPsubmit_form(
         adaptability=adaptability
     )
 
-    create_learner_profile(lp)
-
+    create_learner_profile(username, lp)
 
 
 # -------------------------
