@@ -1,10 +1,13 @@
 import os
 from huggingface_hub import InferenceClient
 from db.db_table_management import get_knowledge_profile_by_username, get_learner_profile_by_username
+from dotenv import load_dotenv
 
 
 class Agent:
     def __init__(self, username, model="openai/gpt-oss-120b"):
+        load_dotenv()
+
         self.username = username
         self.knowledge_profile = get_knowledge_profile_by_username(username)
         self.learning_profile = get_learner_profile_by_username(username)

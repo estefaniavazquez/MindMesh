@@ -4,6 +4,7 @@ import ui.gradio.admin as admin
 import ui.gradio.knowledge_profile as knowledge_profile
 import ui.gradio.learning_profile as learning_profile
 import ui.gradio.user_account as user_account
+import ui.gradio.chat as chat
 from db.db_management import init_db, clear_db_data, clear_db
 
 
@@ -17,10 +18,12 @@ with demo.route("Knowledge Profile"):
     knowledge_profile.demo.render()
 with demo.route("Learning Profile"):
     learning_profile.demo.render()
+with demo.route("Chat"):
+    chat.demo.render()
 
 
 if __name__ == "__main__":
-    clear_db_data()
-    clear_db()
+    # clear_db_data()
+    # clear_db()
     init_db()
     demo.launch()
