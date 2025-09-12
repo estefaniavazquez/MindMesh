@@ -1,6 +1,6 @@
 import gradio as gr
 from profiles.learner_profile import LearnerProfile
-from db.db_table_management import create_learner_profile, get_all_learner_profiles, get_learner_profile_by_username
+from db.db_table_management import create_learner_profile, get_all_learner_profiles
 
 
 def LPsubmit_form(
