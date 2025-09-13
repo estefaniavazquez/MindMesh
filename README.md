@@ -41,3 +41,10 @@
 1. First, close the web application on the web browser.
 2. Then, go to the terminal where the application is running and press `CTRL + C` to stop the application.
 3. Finally, deactivate the virtual environment by running: `deactivate`
+
+
+
+## Additional Showcase
+Below are some pictures of the llm in action, which we did not include in the video:
+![p1](ui_pictures/llm_chat_p1.png)
+![p2](ui_pictures/llm_chat_p2.png)
